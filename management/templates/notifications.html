@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .topbar {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .topbar h1 {
+            color: #1e293b;
+        }
+
+        .buttons a {
+            text-decoration: none;
+
+            padding: 10px 15px;
+
+            border-radius: 5px;
+
+            color: white;
+
+            margin-left: 8px;
+        }
+
+        .dashboard {
+            background: #2563eb;
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: #64748b;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .notification-container {
+            display: grid;
+            gap: 15px;
+        }
+
+        .notification {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .notification h3 {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .notification p {
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .unread {
+            border-left: 5px solid #2563eb;
+        }
+
+        .read {
+            border-left: 5px solid #22c55e;
+        }
+
+        .status {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .unread-status {
+            color: #2563eb;
+        }
+
+        .read-status {
+            color: #22c55e;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- Topbar -->
+
+    <div class="topbar">
+
+        <h1>Notifications</h1>
+
+        <div class="buttons">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="dashboard"
+            >
+                Dashboard
+            </a>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Breadcrumb -->
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        /
+
+        <b>Notifications</b>
+
+    </div>
+
+
+    <!-- Notifications -->
+
+    <div class="notification-container">
+
+
+        {% for notification in notifications %}
+
+
+        <div class="notification
+            {% if notification.is_read %}
+                read
+            {% else %}
+                unread
+            {% endif %}
+        ">
+
+
+            <h3>
+
+                {{ notification.title }}
+
+            </h3>
+
+
+            <p>
+
+                {{ notification.message }}
+
+            </p>
+
+
+            {% if notification.is_read %}
+
+                <span class="status read-status">
+
+                    ✓ Read
+
+                </span>
+
+            {% else %}
+
+                <span class="status unread-status">
+
+                    ● Unread
+
+                </span>
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% empty %}
+
+
+        <div class="notification">
+
+            <p>
+                No notifications found.
+            </p>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

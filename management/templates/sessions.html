@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sessions</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .topbar h1 {
+            color: #1e293b;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons a {
+            color: white;
+            text-decoration: none;
+
+            font-weight: bold;
+
+            padding: 11px 18px;
+
+            border-radius: 6px;
+        }
+
+        .dashboard {
+            background: #2563eb;
+        }
+
+        .dashboard:hover {
+            background: #1d4ed8;
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .logout:hover {
+            background: #b91c1c;
+        }
+
+        /* BREADCRUMB */
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: #64748b;
+        }
+
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .breadcrumb b {
+            color: #1e293b;
+        }
+
+        /* SESSION CARDS */
+
+        .session-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 20px;
+        }
+
+        .session-card {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            border-left: 5px solid #2563eb;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .session-number {
+            color: #2563eb;
+
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+        .session-card h2 {
+            color: #1e293b;
+
+            margin-bottom: 15px;
+        }
+
+        .session-card p {
+            color: #64748b;
+
+            margin-bottom: 8px;
+        }
+
+        .date {
+            color: #1e293b;
+
+            font-weight: bold;
+        }
+
+        .empty {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            color: #64748b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <h1>
+            Sessions
+        </h1>
+
+
+        <div class="buttons">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="dashboard"
+            >
+                Dashboard
+            </a>
+
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        /
+
+        <b>
+            Sessions
+        </b>
+
+    </div>
+
+
+    <!-- SESSION CARDS -->
+
+    <div class="session-container">
+
+
+        {% for session in sessions %}
+
+
+        <div class="session-card">
+
+
+            <div class="session-number">
+
+                Session {{ forloop.counter }}
+
+            </div>
+
+
+            <h2>
+                Academic Session
+            </h2>
+
+
+            <p>
+
+                Start Date:
+
+                <span class="date">
+                    {{ session.session_start }}
+                </span>
+
+            </p>
+
+
+            <p>
+
+                End Date:
+
+                <span class="date">
+                    {{ session.session_end }}
+                </span>
+
+            </p>
+
+
+        </div>
+
+
+        {% empty %}
+
+
+        <div class="empty">
+
+            No sessions found.
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

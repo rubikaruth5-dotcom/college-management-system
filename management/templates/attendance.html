@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f6fb;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .topbar {
+            background: white;
+            padding: 20px;
+
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .topbar h1 {
+            color: #1e293b;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+
+            padding: 11px 18px;
+
+            border-radius: 6px;
+        }
+
+        .dashboard {
+            background: #4d4ce8;
+        }
+
+        .logout {
+            background: #dc2626;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+            color: #64748b;
+        }
+
+        .breadcrumb a {
+            color: #4d4ce8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .breadcrumb b {
+            color: #1e293b;
+        }
+
+        .attendance-section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            color: #1e293b;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+
+            color: #8a91a5;
+
+            font-size: 13px;
+
+            padding: 14px;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        td {
+            padding: 15px 14px;
+
+            font-size: 14px;
+
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .present {
+            background: #e7f8ed;
+
+            color: #159447;
+
+            padding: 6px 12px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .absent {
+            background: #ffe8e8;
+
+            color: #dc2626;
+
+            padding: 6px 12px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #8a91a5;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <h1>
+            Attendance
+        </h1>
+
+
+        <div class="buttons">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="dashboard"
+            >
+                Dashboard
+            </a>
+
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+        <a href="{% url 'dashboard' %}">
+            Home
+        </a>
+
+        /
+
+        <b>
+            Attendance
+        </b>
+
+    </div>
+
+
+    <!-- ATTENDANCE -->
+
+    <div class="attendance-section">
+
+
+        <div class="section-title">
+
+            <h2>
+                Attendance Records
+            </h2>
+
+        </div>
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Student
+                    </th>
+
+                    <th>
+                        Subject
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+                {% for attendance in attendances %}
+
+
+                <tr>
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td>
+                        {{ attendance.student.name }}
+                    </td>
+
+                    <td>
+                        {{ attendance.subject.name }}
+                    </td>
+
+                    <td>
+                        {{ attendance.date }}
+                    </td>
+
+                    <td>
+
+
+                        {% if attendance.status %}
+
+                            <span class="present">
+                                Present
+                            </span>
+
+                        {% else %}
+
+                            <span class="absent">
+                                Absent
+                            </span>
+
+                        {% endif %}
+
+
+                    </td>
+
+                </tr>
+
+
+                {% empty %}
+
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        No attendance records found.
+                    </td>
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
